@@ -86,7 +86,7 @@ text("In space there are some harmful objects",800,100)
 text("for our earth you need to destroy them with",800,130)
 text("help of space shooter.Press Space key to ",800,160)
 text("shoot bullet but be careful if you shoot the ",800,190)
-text("worng object you score will decrease.",800,220)
+text("natural object in space your score will decrease.",800,220)
 
 }
 
@@ -138,8 +138,4 @@ function spawnAdvantages(){
       }
 }
 
-function end(){
- 
-}
-//TAke appropriate name all objects are not obstacles
-//h
+
