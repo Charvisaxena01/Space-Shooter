@@ -82,12 +82,12 @@ if(gameState===PLAY)
     if(obstaclesGroup.isTouching(bulletGroup)){
     score = score -1
     obstaclesGroup.destroyEach()
-    bulletS.destroy()
+    bulletGroup.destroyEach()
     }
     if(disadvGroup.isTouching(bulletGroup)){
      score = score+1
      disadvGroup.destroyEach()
-     bulletS.destroy()
+     bulletGroup.destroyEach()
       }
       textSize(25)
       fill("white")
@@ -98,8 +98,10 @@ if(gameState===PLAY)
       text("help of space shooter.Press Space key to ",800,160)
       text("shoot bullet but be careful if you shoot the ",800,190)
       text("worng object your score will decrease.",800,220)
+      fill("orange")
+      text("Make sure shooter should not toch the objects",800,270)
       fill("pink")
-      text("Press r to reset the game after you loose.",800,270)
+      text("Press r to reset the game after you loose.",800,300)
 
 
 
@@ -171,9 +173,7 @@ function spawnAdvantages(){
 }
 
 function end(){
-  textSize(25)
-  fill("white")
-  text("Press 'r' to reset the game",300,400)
+  audio.stop()
   score = 0
   bgS.velocityY = 0
   obstaclesGroup.destroyEach()
