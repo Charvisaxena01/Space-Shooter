@@ -2,7 +2,7 @@ var earth,knife,monster,moon,rock,shooter,sun;
 var obstacles;
 
 PLAY=1
-END=2
+END=0
 var gameState =PLAY;
 
 function preload(){
@@ -18,6 +18,8 @@ disadvGroup = new Group()
 bg = loadImage("BG.jpg")
 bullet = loadImage("bullet.png")
 audio = new Audio('audio1.mp3')
+gameover = loadImage("Go.jpg")
+restart = loadImage("RE.png")
 }
 
 function setup(){
@@ -29,21 +31,38 @@ Shooter.addImage(shooter)
 Shooter.scale = 0.3
 bulletGroup = new Group()
 score = 0
+gameOver = createSprite(700,350,500,800)
+gameOver.addImage(gameover)
+gameOver.visible = false;
+gameOver.scale = 3.0
+
+reset = createSprite(700,720,40,40)
+reset.addImage(restart)
+reset.visible = false
+reset.scale = 0.5
+
+
 
 }
 
 function draw(){
-  background("white")
- 
+  background("black")
+  drawSprites()
+  //score = 0 
   bgS.velocityY = 6
   if (bgS.y > 600){
   bgS.y = 200;
     
  }
 
+ 
+
 if(gameState===PLAY)
 {
-
+  
+  gameOver.visible =false
+ reset.visible = false
+ Shooter.visible = true
   audio.play()
     spawnAdvantages()
     spawnMonster()
@@ -70,23 +89,36 @@ if(gameState===PLAY)
      disadvGroup.destroyEach()
      bulletS.destroy()
       }
-   
+      textSize(25)
+      fill("white")
+      text("Score "+ score,800,60)
+      fill("blue")
+      text("In space there are some harmful objects",800,100)
+      text("for our earth you need to destroy them with",800,130)
+      text("help of space shooter.Press Space key to ",800,160)
+      text("shoot bullet but be careful if you shoot the ",800,190)
+      text("worng object your score will decrease.",800,220)
+      fill("pink")
+      text("Press r to reset the game after you loose.",800,270)
 
 
 
     }
 
+    if(Shooter.isTouching(obstaclesGroup)){
+      bgS.velocityY = 0 
+      end()
+          }
+    if(Shooter.isTouching(disadvGroup)){
+        bgS.velocityY = 0 
+        end()
+                }
+    if(keyDown("r")){
+      gameState = PLAY
+      //score = 0
+    }
 
-drawSprites()
-textSize(25)
-fill("white")
-text("Score "+ score,800,60)
-fill("blue")
-text("In space there are some harmful objects",800,100)
-text("for our earth you need to destroy them with",800,130)
-text("help of space shooter.Press Space key to ",800,160)
-text("shoot bullet but be careful if you shoot the ",800,190)
-text("natural object in space your score will decrease.",800,220)
+
 
 }
 
@@ -138,4 +170,18 @@ function spawnAdvantages(){
       }
 }
 
-
+function end(){
+  textSize(25)
+  fill("white")
+  text("Press 'r' to reset the game",300,400)
+  score = 0
+  bgS.velocityY = 0
+  obstaclesGroup.destroyEach()
+  disadvGroup.destroyEach()
+  gameOver.visible = true
+  reset.visible = true
+  gameState = END
+  Shooter.visible = false
+  bulletGroup.destroyEach()
+ 
+}
