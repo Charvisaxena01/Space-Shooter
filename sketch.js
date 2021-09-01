@@ -173,7 +173,7 @@ function spawnAdvantages(){
 }
 
 function end(){
-  audio.stop()
+  //audio.stop()
   score = 0
   bgS.velocityY = 0
   obstaclesGroup.destroyEach()
