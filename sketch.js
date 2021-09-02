@@ -34,7 +34,7 @@ score = 0
 gameOver = createSprite(700,350,500,800)
 gameOver.addImage(gameover)
 gameOver.visible = false;
-gameOver.scale = 3.0
+gameOver.scale = 0.5
 
 reset = createSprite(700,720,40,40)
 reset.addImage(restart)
@@ -49,17 +49,17 @@ function draw(){
   background("black")
   drawSprites()
   //score = 0 
-  bgS.velocityY = 6
-  if (bgS.y > 600){
-  bgS.y = 200;
-    
- }
+ 
 
  
 
 if(gameState===PLAY)
 {
-  
+  bgS.velocityY = 6
+  if (bgS.y > 600){
+  bgS.y = 200;
+    
+ }
   gameOver.visible =false
  reset.visible = false
  Shooter.visible = true
@@ -100,21 +100,20 @@ if(gameState===PLAY)
       text("worng object your score will decrease.",800,220)
       fill("orange")
       text("Make sure shooter should not toch the objects",800,270)
+      textSize(25)
       fill("pink")
       text("Press r to reset the game after you loose.",800,300)
-
-
-
     }
 
-    if(Shooter.isTouching(obstaclesGroup)){
-      bgS.velocityY = 0 
-      end()
+    if(Shooter.isTouching(obstaclesGroup) || Shooter.isTouching(disadvGroup)){
+      gameState = END
+      
+      
           }
-    if(Shooter.isTouching(disadvGroup)){
-        bgS.velocityY = 0 
-        end()
-                }
+    if(gameState=== END)
+    {
+      end()
+    }
     if(keyDown("r")){
       gameState = PLAY
       //score = 0
@@ -173,14 +172,16 @@ function spawnAdvantages(){
 }
 
 function end(){
-  //audio.stop()
+  textSize(25)
+  fill("pink")
+  text("Press r to reset the game.",900,200)
   score = 0
   bgS.velocityY = 0
   obstaclesGroup.destroyEach()
   disadvGroup.destroyEach()
   gameOver.visible = true
   reset.visible = true
-  gameState = END
+  
   Shooter.visible = false
   bulletGroup.destroyEach()
  
